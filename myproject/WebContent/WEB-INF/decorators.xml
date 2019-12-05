@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<decorators defaultdir="/decorator">
+	<!-- decorator폴더의 decorator.jsp로 가면 -->
+	<decorator name="main" page="decorator.jsp">
+		<pattern>/diary/member/*</pattern>
+		<pattern>/diary/board/*</pattern>
+	</decorator>
+<!--
+	따로 설정해줘도됨
+	<decorator name="member" page="decorator.jsp">
+		<pattern>/model2/member/*</pattern>
+	</decorator>
+	<decorator name="board" page="decorator.jsp">
+		<pattern>/model2/board/*</pattern>
+	</decorator>
+ -->
+	<excludes><!-- sitemesh를 사용하지 않게 -->
+		<pattern>/diary/board/writeForm*</pattern>
+		<pattern>/diary/board/updateForm*</pattern>
+		<pattern>/diary/board/imgupdateForm*</pattern>
+		<pattern>/diary/board/picture*</pattern>
+		<pattern>/diary/member/joinForm*</pattern>
+		<pattern>/diary/member/loginForm*</pattern>
+		<pattern>/diary/board/minihome*</pattern>
+		<pattern>/diary/member/picture*</pattern>
+		<pattern>/diary/member/pwForm.*</pattern>
+	</excludes>
+</decorators>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- !DOCTYPE : xml 문서 작성 규칙을 지정한 파일을 지정 -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="model/mapper/mybatis.properties" />
+	<!-- connection, url정보를 가지고있는 mybatis.properties -->
+	<typeAliases> <!-- MemberMapper1.xml의 resultType을 일일이 지정안해줘도됨 -->
+		<typeAlias type="model.Member" alias="Member"/>
+		<typeAlias type="model.Board" alias="Board"/>
+		<!-- xml에서만 사용, 인터페이스는 사용하지 않음 -->
+	</typeAliases>
+	<!-- db connection 설정 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+			<!-- mybatis.properties에 있는 jdbc.driver를 가져와서 환경설정 -->
+				<property name="driver" value="${jdbc.driver}"/>
+				<property name="url" value="${jdbc.url}"/>
+			<!-- db의 username을 바꾸려면 mybatis.properties에서 바꾸기만 하면됨 -->
+				<property name="username" value="${jdbc.username}"/>
+				<property name="password" value="${jdbc.password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+<!-- connection에 해당하는 부분 -->
+	
+	<!-- 사용할 sql 구문을 저장한 xml을 성정 -->
+	<mappers>
+		 <package name="model.mapper"/>
+	</mappers><!-- xml이 아닌 인터페이스를 설정한 것. -->
+</configuration>
