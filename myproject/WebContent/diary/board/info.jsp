@@ -9,21 +9,26 @@
 <style type="text/css">
 	th{text-align:center;}
 	table{font-size: medium;}
+	td{text-align:center;}
 </style>
 </head>
 <body>
-<table border="2" width="100%">
-	<tr><th width="20%">글쓴이</th>
-		<td width="80%" style="text-align:left">${b.name}</td>
+<div class="grid">
+<div class="grid-body" style="align-content: center;">
+<div class="form-group input-rounded">
+<form style="width:80%">
+<table border="1" width="100%" style="border-color: #BDBDBD;align-content: center;">
+	<tr><th width="15%">글쓴이</th>
+		<td width="85%">${b.name}</td>
 	</tr>
 	<tr><th>제목</th>
-		<td style="text-align:left">${b.subject }</td>
+		<td>${b.subject }</td>
 	</tr>
 	<tr><th>내용</th>
 		<td>
 			<table style="width:100%; height:250px;">
 				<tr>
-					<td style="border-width:0px; vertical-align:top; text-align:left">
+					<td style="border-width:0px; vertical-align:top;">
 						${b.content }
 					</td>
 				</tr>
@@ -39,14 +44,18 @@
 			</c:if>
 			</td></tr>
 	<tr><td colspan="2" align="center">
-		<a href="replyForm.do?num=${b.num}">[댓글]</a>
+		<%-- <a href="replyForm.do?num=${b.num}">[댓글]</a> --%>
 		<c:if test="${login eq 'admin' || login eq b.id}">
-			<a href="updateForm.do?num=${b.num}&boardnum=${b.boardnum}">[수정]</a>
-			<a href="delete.do?num=${b.num}&boardnum=${b.boardnum}">[삭제]</a>
+			<a href="updateForm.do?num=${b.num}&boardnum=${b.boardnum}">
+			<input type="button" class="btn btn-outline-info btn-rounded" value="수정"></a>
+			<a href="delete.do?num=${b.num}&boardnum=${b.boardnum}">
+			<input type="button" class="btn btn-outline-info btn-rounded" value="삭제"></a>
 		</c:if>
-		<a href="board1.do?boardnum=3">[목록]</a>
+		<a href="board1.do?boardnum=3"><input type="button" class="btn btn-outline-info btn-rounded" value="목록"></a>
 		</td>
 	</tr>
 </table>
+</form>
+</div></div></div>
 </body>
 </html>

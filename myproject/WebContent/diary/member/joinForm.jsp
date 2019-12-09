@@ -17,6 +17,30 @@
 		var op = "width=500, height=150, left=50, top=150";
 		open("pictureForm.jsp","",op)
 	}
+	function inputcheck(){
+		f = document.f;
+		if(f.id.value==""){
+			alert("아이디를 입력하세요")
+			f.id.focus()
+			return false;
+		}
+		if(f.pass.value==""){
+			alert("비밀번호를 입력하세요")
+			f.pass.focus()
+			return false;
+		}
+		if(f.name.value==""){
+			alert("닉네임을 입력하세요")
+			f.name.focus()
+			return false;
+		}
+		if(f.email.value==""){
+			alert("이메일을 입력하세요")
+			f.email.focus()
+			return false;
+		}
+		f.submit()
+	}
 </script>
   </head>
   <body>
@@ -32,9 +56,9 @@
             <div class="grid-body">
               <div class="row">
                 <div class="col-lg-7 col-md-8 col-sm-9 col-12 mx-auto form-wrapper">
-                  <form action="join.me" name="f" method="post">
+                  <form action="join.me" name="f" method="post" style="text-align: center;">
                   	<input type="hidden" name="picture" value="" />
-                  	<table>
+                  	<table  width="100%">
                   	<tr class="form-group input-rounded" align="center">
                   	   	<td rowspan="4"  colspan="3" valign="bottom">
 							<img src="" width="100" height="120" id="pic"><br>
@@ -50,12 +74,14 @@
 						<tr>
 						</tr>
                     <tr class="form-group input-rounded">
-                    	<td colspan="2">
+                    	<td colspan="3">
                       		<input type="text" class="form-control" placeholder="id" name="id"/>
                       	</td>
-                      	<td>
-                      		&nbsp;<input type="button" class="btn btn-primary btn-xs" value="아이디 중복확인">
-                      	</td>
+                      	<!-- <td>
+                      		&nbsp;<input type="button" class="btn btn-primary btn-xs" value="아이디 중복확인"
+                      			onclick="openIdChk()">
+                      			<input type="hidden" name="inDuplication" value="idUncheck">
+                      	</td> -->
                    	</tr>
                     <tr class="form-group input-rounded">
                     	<td colspan="3">
@@ -85,11 +111,10 @@
                     <tr class="form-group input-rounded">
                     <tr>
     	                <td colspan="3">
-	        	            <button type="submit" class="btn btn-primary btn-block">회원가입</button>
+	        	            <button type="button" onclick="inputcheck()" class="btn btn-primary btn-block">회원가입</button>
 	        	            <br>
         	            </td>
         	        </tr>
-                    </tr>
                     <tr class="form-group input-rounded">
         	            <td colspan="3" align="center">
 	        	            <a href="loginForm.jsp">로그인</a>

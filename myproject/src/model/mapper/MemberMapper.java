@@ -47,4 +47,13 @@ public interface MemberMapper {
 	@Select("select pass from member where id=#{id} and email=#{email} and tel=#{tel}")
 	String pwselect(@Param("id") String id, @Param("email") String email);
 
+	@Select("select id, name, email, picture from member where id like CONCAT('%', #{searchid}, '%')")
+	List<Member> memsearch(String searchid);
+
+	@Delete("delete from board_like where id=#{id}")
+	boolean likedelete(String id);
+
+	@Delete("delete from deco where id=#{id}")
+	boolean decodelete(String id);
+
 }

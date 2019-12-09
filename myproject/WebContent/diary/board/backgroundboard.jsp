@@ -13,6 +13,10 @@
 		document.sf.submit();
 	}
 	
+	function minihome(id){
+		var op = "width=1000, height=600, left=50, top=150, scrollbars=no, resizable=no "
+		open(id,"",op);
+	}
 </script>
 <style type="text/css">
 	th, td {
@@ -21,13 +25,13 @@
 </style>
 </head>
 <body>
+<p class="grid-header">배경지 공유 게시판</p>
 	<form action="backgroundboard.do?boardnum=2" method="post" name="sf">
 		<input type="hidden" name="pageNum" value="1">
 		<input type="hidden" name="boardnum" value="2">
 		<table class="table info-table table-bordered">
-		<tr><td><p class="grid-header">배경지 공유 게시판</p></td></tr>
-		<tr>
-			<td style="text-align:center; border-width:0px;">
+		<tr align="center">
+			<td style="text-align:center;">
 			<select name="column">
 				<option value="">선택하세요</option>
 				<option value="subject">제목</option>
@@ -57,6 +61,12 @@
 						<tr height="5">
 							<td border="1" colspan="5" style="text-align: left; padding: 10px; ">글개수 : ${boardcnt }</td>
 						</tr>
+						<tr>
+							<td colspan="5" style="text-align: right;">
+								<a href="imgwriteForm.do?boardnum=2">
+								<input class="btn btn-outline-info btn-rounded" type="button" value="글쓰기"></a>
+							</td>
+						</tr>
 						<ul>
 						<% int cnt=0; %>
 						<c:forEach items="${list}" var="b">
@@ -66,10 +76,10 @@
 							<tr class="form-group input-rounded" align="center">
 						</c:if>
 		                  	   	<td valign="bottom">
-									<img src="../board/picture/${b.img }" width="150" height="150" id="pic"><br>
+									<img src="../board/picture/${b.img }" width="180" height="150" id="pic"><br>
 									<a style="font-size:medium;" href="imginfo.do?num=${b.num}&boardnum=2"> ${b.subject}</a>
 								<br>
-								작성자 : ${b.name}<br>
+								작성자 : <a href="javascript:minihome('../board/minihome.do?id=${b.id}')">${b.name}</a><br>
 								좋아요 : ${b.likenum}<br>
 											<a href="like.do?id=${login}&num=${b.num}&boardnum=${b.boardnum}">
 											<c:if test="${b.likechk==0}">
@@ -121,11 +131,6 @@
 							</tr>
 					</c:if>
 					<!-- else 구문 끝 -->
-					<tr>
-						<td colspan="5" style="text-align: right">
-							<a href="imgwriteForm.do?boardnum=2">[글쓰기]</a>
-						</td>
-					</tr>
 				</table>
 			</div>
 			</div>

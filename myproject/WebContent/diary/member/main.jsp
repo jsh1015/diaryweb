@@ -74,7 +74,7 @@ if(request.getParameter("action") == null) {
 <title>메인페이지</title>
 <script type="text/javascript">
 	function minihome(id){
-		var op = "width=1000, height=500, left=50, top=150, scrollbars=no, resizable=no "
+		var op = "width=1000, height=600, left=50, top=150, scrollbars=no, resizable=no "
 		open(id,"",op);
 	}
 </script>
@@ -84,13 +84,13 @@ if(request.getParameter("action") == null) {
 		}
 		
 		#calendarTable {
-			border: 1px solid #A6A6A6;
+			border: 1px solid #BDBDBD;
 			width: 519px;
 		}
 		
 		#calendarTable th, #calendarTable td {
 			width: <%=boxSize%>px;
-			border: 1px solid #A6A6A6;
+			border: 1px solid #BDBDBD;
 			border-collapse: collapse;
 			padding: 5px;
 		}
@@ -121,9 +121,9 @@ if(request.getParameter("action") == null) {
 <body bgcolor='white'>
 	<table width="100%">
 		<tr height="100%">
-			<td rowspan="2" text-align="center">
-				<div class="table-responsive"  align="center">
-					<table border='0' width="100%" celpadding='0' cellspacing='0'>
+			<td rowspan="2" style="text-align:center;">
+				<div class="table-responsive" style="align:center">
+					<table style="width:100%;" >
 						<tr>
 							<td align='right' valign='middle'>
 								<a href="main.me?month=<%=currMonth%>&year=<%=currYear%>&action=0">
@@ -138,11 +138,11 @@ if(request.getParameter("action") == null) {
 							</td>
 						</tr>
 					</table>
-					<table width="100%">
-						<tr>
-							<td width="100%" align="center">
-								<table id="calendarTable">
-									<tr>
+					<table style="width:100%; align-content: center;">
+						<tr align="center">
+							<td width="100%">
+								<table style=" align-content: center;" id="calendarTable">
+									<tr style="text-align: center;">
 										<th>일</th>
 										<th>월</th>
 										<th>화</th>
@@ -179,8 +179,8 @@ if(request.getParameter("action") == null) {
                              todayColor = "";
                          }
 %>
-										<td <%=todayColor%>><%=dispDay%><br></td>
-										<%
+							<td style="text-align: center;" <%=todayColor%>><%=dispDay%><br></td>
+							<%
                          count += 1;
                          dispDay += 1;
                     }
@@ -206,7 +206,7 @@ if(request.getParameter("action") == null) {
 			
 			<td>
 				<div class="table-responsive" style="padding-left: 25px;">
-					<table border="1" style="text-align: center;">
+					<table border="1" style="text-align: center; border-color:#BDBDBD">
 					<tr><td colspan="5"><p class="grid-header">인기스티커</p></td></tr>
 						<tr>
 							<th width="8%">번호</th>
@@ -220,31 +220,17 @@ if(request.getParameter("action") == null) {
 						<tr>
 						<%cnt++; %>
 							<td><%=cnt %></td>
-							<td style="text-align: left">
-								<c:if test="${!empty b.file1}">
-								<%--null이거나 비어있는 경우 empty --%>
-									<a href="file/${b.file1 }" style="text-decoration: none;">@</a>
-								</c:if> 
-								<c:if test="${empty b.file1}">
-									&nbsp;&nbsp;&nbsp; 
-								</c:if> <%--답글 표시하기 --%> 
-								<a href="../board/imginfo.do?num=${b.num}&boardnum=1"> ${b.subject}</a>
-							</td>
-							<td><a href="javascript:minihome('../board/minihome.do?id=${b.id}')">
-									${b.name}
-								</a>
-							</td>
-							<td><c:set var="today" value="<%=new java.util.Date()%>" />
-								<fmt:formatDate pattern="yy-MM-dd" value="${today }"
-										var="now" /> <fmt:formatDate pattern="yy-MM-dd"
-										value="${b.regdate }" var="reg" /> 
+							<td style="text-align: left"><a href="../board/imginfo.do?num=${b.num}&boardnum=1">${b.subject}</a></td>
+							<td><a href="javascript:minihome('../board/minihome.do?id=${b.id}')">${b.name}</a></td>
+							<c:set var="today" value="<%=new java.util.Date()%>" />
+								<fmt:formatDate pattern="yy-MM-dd" value="${today }" var="now" /> 
+								<fmt:formatDate pattern="yy-MM-dd" value="${b.regdate }" var="reg" /> 
 								<c:if test="${reg==now}">
-									<fmt:formatDate value="${b.regdate}" pattern="HH:mm:ss" />
+									<td><fmt:formatDate value="${b.regdate}" pattern="HH:mm:ss" /></td>
 								</c:if>
 								<c:if test="${reg!=now}">
-									<fmt:formatDate pattern="yy-MM-dd HH:mm" value="${b.regdate }" />
+									<td><fmt:formatDate pattern="yy-MM-dd HH:mm" value="${b.regdate }" /></td>
 								</c:if>
-							</td>
 							<td>${b.likenum}</td>
 						</tr>
 						</c:forEach>
@@ -255,8 +241,8 @@ if(request.getParameter("action") == null) {
 		<tr>
 			<td>
 				<div class="table-responsive" style="padding-left: 25px;">
-					<table border="1" style="text-align: center;">
-					<tr><td colspan="5"><p class="grid-header">인기배경</p></td></tr>
+					<table border="1" style="text-align: center; border-color:#BDBDBD">
+						<tr><td colspan="5"><p class="grid-header">인기배경</p></td></tr>
 						<tr>
 							<th width="8%">번호</th>
 							<th width="50%">제목</th>

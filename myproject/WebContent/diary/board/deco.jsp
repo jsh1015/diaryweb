@@ -24,9 +24,7 @@
 			<div class="grid-body"> 
 			<div class="item-wrapper">
 			<div class="table-responsive">
-				<table class="table info-table table-bordered">
-					<tr><td colspan="5"><p class="grid-header">내 다꾸함</p></td></tr>
-				</table>
+				<p class="grid-header">내 다꾸함</p>
 				<table style="text-align:center; width:100%;">
 					<c:if test="${decocnt == 0}">
 						<tr>

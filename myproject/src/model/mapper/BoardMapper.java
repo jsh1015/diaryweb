@@ -112,4 +112,30 @@ public interface BoardMapper {
 
 	@Update("update member set color=#{color} where id=#{id}")
 	boolean colorupdate(@Param("id") String id,  @Param("color") String color);
+
+	//미니홈피에 데코가져오기
+	@Select("select * from deco where id=#{id} and deconum=#{deconum}")
+	List<Deco> deco(@Param("id") String id, @Param("deconum") int deconum);
+
+	@Select({"<script>",
+		"SELECT * FROM board WHERE id=#{id} AND boardnum=#{boardnum} " + 
+		"order by regdate desc limit #{start},#{limit}",
+		"</script>"
+		})
+	List<Board> minihomeboard(Map<String, Object> map);
+
+	@Select("select count(*) from board where id=#{id} and boardnum=#{boardnum}")
+	int miniboardCount(Map<String, Object> map);
+
+	@Insert("insert into board (boardnum,num,id,name,subject,content,file1,regdate," 
+			+"setdate, cnt, likenum, setpublic, img,backimg ) "
+			+ "values(#{boardnum},#{num},#{id},#{name},#{subject},#{content},"
+			+ "#{file1},now(),#{setdate},0,0,#{setpublic},#{img},#{backimg})")
+	int minihomeinsert(Board b);
+
+	@Update("update board set name=#{name} where id=#{id}")
+	int nameupdate(@Param("name")String name, @Param("id")String id);
+
+	@Update("update board set content=#{content}, subject=#{subject}, setpublic=#{setpublic}, backimg=#{backimg} where num=#{num} and boardnum=4")
+	boolean minihomeupdate(Board b);
 }

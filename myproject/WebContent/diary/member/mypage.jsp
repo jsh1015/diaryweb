@@ -92,7 +92,8 @@
                     	</td>
                     </tr>
 					<tr class="form-group input-rounded">
-						<td colspan="3" align="center"><input type="submit" class="btn btn-outline-info btn-rounded" value="회원수정">
+						<td colspan="3" align="center">
+							<input type="submit" class="btn btn-outline-info btn-rounded" value="회원수정" onclick="javascript:inputcheck()" >
 							<c:if test="${my.id != 'admin' && sessionScope.login!='admin' }">
 								<a href="deleteForm.me?id=${info.id}">
 									<input type="button" class="btn btn-outline-info btn-rounded" value="탈퇴하기">

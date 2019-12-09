@@ -13,14 +13,18 @@
 		document.sf.submit();
 	}
 </script>
+<style type="text/css">
+	tr,td,th,table{padding:10px;}
+	tr{border: 1px solid #EAEAEA}
+</style>
 </head>
 <body>
+	<p class="grid-header">자유게시판</p>
 	<form action="board1.do?boardnum=3" method="post" name="sf">
 		<input type="hidden" name="pageNum" value="1">
 		<input type="hidden" name="boardnum" value="3">
 		<table class="table info-table table-bordered">
-		<tr><td><p class="grid-header">자유게시판</p></td></tr>
-		<tr>
+		<tr align="center">
 			<td style="text-align:center; border-width:0px;">
 			<select name="column">
 				<option value="">선택하세요</option>
@@ -49,7 +53,10 @@
 					</c:if>
 					<c:if test="${boardcnt > 0 }">
 						<tr>
-							<td colspan="5" style="text-align: left">글개수 : ${boardcnt }</td>
+							<td colspan="2" style="text-align: left">글개수 : ${boardcnt }</td>
+							<td colspan="3" style="text-align: right">
+								<a href="writeForm.do?boardnum=3">[글쓰기]</a>
+							</td>
 						</tr>
 						<tr>
 							<th width="8%">번호</th>
@@ -62,7 +69,7 @@
 						<tr>
 							<td>${board}</td>
 							<c:set var="board" value="${board-1 }" />
-							<td style="text-align: left">
+							<td style="text-align:center">
 								<c:if test="${!empty b.file1}">
 								<%--null이거나 비어있는 경우 empty --%>
 									<a href="file/${b.file1 }" style="text-decoration: none;">@</a>
@@ -112,11 +119,6 @@
 							</tr>
 					</c:if>
 					<!-- else 구문 끝 -->
-					<tr>
-						<td colspan="5" style="text-align: right">
-							<a href="writeForm.do?boardnum=3">[글쓰기]</a>
-						</td>
-					</tr>
 				</table>
 			</div>
 			</div>

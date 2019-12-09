@@ -37,12 +37,15 @@
 </style>
 </head>
 <body>
+<div class="grid">
+<div class="grid-body" style="align-content: center;">
+<div class="form-group input-rounded">
 <form action="write.do" style="width:100%; height:100%" method="post" enctype="multipart/form-data" name="f">
 <input type="hidden" value="${login}" name="id">
 <input type="hidden" value="${param.boardnum}" name="boardnum">
 <input type="hidden" name="img" value="" />
 	<div class="grid">
-      <table border="1" style="text-ailgn:center; border-collapse:collapse;" class="form-group input-rounded">
+      <table style="text-ailgn:center; border-collapse:collapse;" class="form-group input-rounded">
 		<tr><th colspan="5">게시판 글쓰기</th></tr>
 		<tr class="form-group input-rounded" align="center">
            	   	<td rowspan="4"  colspan="3" valign="bottom">
@@ -54,13 +57,14 @@
 		</tr> 
 		<tr><td>글쓴이</td><td><input size="150" class="form-control" type="text" value="${nickname}" name="name" readonly></td></tr>
 		<tr><td>제목</td><td><input size="150" class="form-control" type="text" name="subject"></td></tr>
-		<tr><td>내용</td><td><textarea class="form-control" rows="15" cols="20" name="content" id="content1"></textarea>
+		<tr><td>내용</td><td><textarea class="form-control" rows="15" cols="40" name="content" id="content1"></textarea><br>
 		</td></tr>
 		<tr><td colspan="5">
-			<input type="button" value="게시물 등록" onclick="inputcheck()"></td>
+			<input class="btn btn-outline-success btn-rounded" type="button" value="게시물 등록" onclick="inputcheck()"></td>
 		</tr>
 	</table>
 	</div>
 </form>
+</div></div></div>
 </body>
 </html>

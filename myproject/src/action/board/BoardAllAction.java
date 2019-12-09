@@ -16,6 +16,7 @@ import model.BoardDao;
 import model.Board_like;
 import model.Deco;
 import model.Member;
+import model.MemberDao;
 
 public class BoardAllAction{
 	private BoardDao dao = new BoardDao();
@@ -38,7 +39,7 @@ public class BoardAllAction{
 			MultipartRequest multi = new MultipartRequest(request,path,10*1024*1024,"utf-8"); //1.
 			Board b = new Board();
 			int boardnum = Integer.parseInt(multi.getParameter("boardnum"));
-			
+			String id = multi.getParameter("id");
 			b.setBoardnum(Integer.parseInt(multi.getParameter("boardnum")));
 			b.setId(multi.getParameter("id"));
 			b.setName(multi.getParameter("name"));
@@ -57,6 +58,8 @@ public class BoardAllAction{
 					url = "backgroundboard.do?boardnum=2";
 				}else if(boardnum ==3) {
 					url = "board1.do?boardnum=3";
+				}else if(boardnum ==4) {
+					url = "minihome.do?id="+id;
 				}
 			}					//3. 4.
 		}catch(IOException e) {
@@ -172,7 +175,7 @@ public class BoardAllAction{
 				url = "board1.do?boardnum=3";
 			}
 		}else {
-			if(login.equals(db.getId())) {
+			if(login.equals("admin") || login.equals(db.getId())) {
 				boolean result = new BoardDao().delete(num);
 				if(result) {
 					msg = "삭제성공";
@@ -182,6 +185,8 @@ public class BoardAllAction{
 						url = "backgroundboard.do?boardnum=2";
 					}else if(boardnum==3) {
 						url = "board1.do?boardnum=3";
+					}else if(boardnum==4) {
+						url = "minihome.do?id="+login+"&boardnum=4&pagenum=1";
 					}
 				}
 			}else if(!login.equals(db.getId())){
@@ -217,9 +222,9 @@ public class BoardAllAction{
 		}//파일이 변경 되지 않았을경우
 		
 		Board board = new BoardDao().selectOne(boardnum, b.getNum());
-		String msg = "비밀번호 불일치";
-		String url = "updateForm.do?num=" + b.getNum();
-		if(login.equals(board.getId())) {
+		String msg = "본인만 수정 가능합니다.";
+		String url = "main.me";
+		if(login.equals("admin") || login.equals(board.getId())) {
 			if(new BoardDao().update(b)) {
 				msg = "수정성공";
 				if(boardnum==1) {
@@ -244,6 +249,7 @@ public class BoardAllAction{
 		request.setAttribute("url", url);
 		return new ActionForward(false,"../alert.jsp");
 	}
+	
 	
 	public ActionForward like(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		int num = Integer.parseInt(request.getParameter("num"));
@@ -302,7 +308,6 @@ public class BoardAllAction{
 		request.setAttribute("url", url);
 		return new ActionForward(false,"../alert.jsp");
 	}
-	
 	public ActionForward decolist(HttpServletRequest request, HttpServletResponse response){
 		int limit = 10; //한건당 페이지 10
 		int pageNum = 1;
@@ -349,11 +354,84 @@ public class BoardAllAction{
 		request.setAttribute("url", url);
 		return new ActionForward(false,"../alert.jsp");
 	}
+	public ActionForward minihomeupdateForm(HttpServletRequest request, HttpServletResponse response){
+		String id = request.getParameter("id");
+		int num = Integer.parseInt(request.getParameter("num")); //1
+		int boardnum = Integer.parseInt(request.getParameter("boardnum"));
+		List<Member> mem = dao.minihomemem(id);
+		Board board = new BoardDao().selectOne(boardnum, num);//2
+		List<Deco> sticker = dao.minidecolist(id, 1);
+		List<Deco> background = dao.minidecolist(id, 2);
+		
+		request.setAttribute("mem", mem.get(0));
+		request.setAttribute("s", sticker);
+		request.setAttribute("b", background);
+		request.setAttribute("board", board);	//4
+		
+		return new ActionForward();
+	}
+	
+	public ActionForward minihomeupdate(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String path = request.getServletContext().getRealPath("/")+"diary/board/file/";
+		MultipartRequest multi = new MultipartRequest(request,path,10*1024*1024,"utf-8"); //1.
+		String login = (String) request.getSession().getAttribute("login");
+		int num = Integer.parseInt(request.getParameter("num"));
+		String id = multi.getParameter("id");
+		String backimg = multi.getParameter("backimg");
+		System.out.println(backimg);
+		Board b = new Board();
+		b.setNum(num);
+		b.setContent(multi.getParameter("content"));
+		b.setSubject(multi.getParameter("subject"));
+		b.setSetpublic(Integer.parseInt(multi.getParameter("setpublic")));
+		if(backimg.equals("") || backimg==null) {
+			b.setBackimg(null);
+		}else {
+			b.setBackimg(backimg);
+		}
+		
+		Board board = new BoardDao().selectOne(4, num);
+		String msg = "본인만 수정 가능합니다.";
+		String url = "minihome.do?id="+id+"&boardnum=4&pagenum=1";
+		if(login.equals("admin") || login.equals(board.getId())) {
+			if(new BoardDao().minihomeupdate(b)) {
+				msg = "수정성공";
+			}else {
+				msg = "수정실패";
+			}
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false,"../alert.jsp");
+	}
 	
 	public ActionForward minihome(HttpServletRequest request, HttpServletResponse response){
 		String id = request.getParameter("id");
-		List<Member> list = dao.minihome(id);
-		request.setAttribute("mem", list.get(0));
+		int limit = 1; //한페이지당 15건
+		int pageNum = 1;
+		try {
+			pageNum = Integer.parseInt(request.getParameter("pageNum"));//1.
+		}catch(NumberFormatException e) {}
+		List<Member> mem = dao.minihomemem(id);
+		int boardcnt = dao.miniboardCount(4,id);
+		List<Board> list = dao.minihomelist(4,pageNum,limit,id);
+		 	
+		int maxpage = (int)((double)boardcnt/limit + 0.95);
+		int startpage = ((int)(pageNum/10.0+0.9)-1)*10+1;
+		int endpage = startpage + 9;
+		if(endpage >maxpage)endpage = maxpage;
+		int board = boardcnt - (pageNum - 1) *limit;		//2.
+		
+		request.setAttribute("boardnum", 4);
+		request.setAttribute("boardcnt", boardcnt);
+		request.setAttribute("list", list); //미니홈피 게시글
+		request.setAttribute("maxpage", maxpage);
+		request.setAttribute("startpage", startpage);
+		request.setAttribute("endpage", endpage);
+		request.setAttribute("board", board);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("mem", mem.get(0));
+		
 		return new ActionForward();
 	}
 	
@@ -368,4 +446,64 @@ public class BoardAllAction{
 		return new ActionForward();
 	}
 	
+	public ActionForward minihomewriteForm(HttpServletRequest request, HttpServletResponse response){
+		String id = request.getParameter("id");
+		MemberDao m = new MemberDao();
+		Member mem = m.selectOne(id);
+		List<Deco> background = dao.minidecolist(id, 2);
+		List<Deco> sticker = dao.minidecolist(id, 1);
+		request.setAttribute("s", sticker);
+		request.setAttribute("b", background);
+		request.setAttribute("mem", mem);
+		return new ActionForward();
+	}
+	
+	
+	public ActionForward minihomewrite(HttpServletRequest request, HttpServletResponse response) throws ServletException{
+		String path = request.getServletContext().getRealPath("/")+"diary/board/file/";
+		String msg ="";
+		String url ="";
+		try {
+			File f = new File(path);
+			if(!f.exists()) f.mkdirs();
+			MultipartRequest multi = new MultipartRequest(request,path,10*1024*1024,"utf-8"); //1.
+			Board b = new Board();
+			int boardnum = Integer.parseInt(multi.getParameter("boardnum"));
+			String id = multi.getParameter("id");
+			String backimg = multi.getParameter("backimg");
+			msg = "게시물 등록 실패";
+			url = "minihomewriteForm.do?id="+id;
+			
+			b.setBoardnum(Integer.parseInt(multi.getParameter("boardnum")));
+			b.setId(multi.getParameter("id"));
+			b.setName(multi.getParameter("name"));
+			b.setSubject(multi.getParameter("subject"));
+			b.setContent(multi.getParameter("content"));
+			b.setSetpublic(Integer.parseInt(multi.getParameter("setpublic")));
+			if(backimg.equals("") || backimg==null) {
+			}else {
+				b.setBackimg(backimg);
+			}
+			int num = dao.maxnum();	//최대값 가져옴
+			b.setNum(++num);
+			/*b.setGrp(num); */
+			if(dao.minihomeinsert(b)) {
+				msg = "게시물 등록 성공";
+				if(boardnum==1) {
+					url = "stickerboard.do?boardnum=1";
+				}else if(boardnum==2) {
+					url = "backgroundboard.do?boardnum=2";
+				}else if(boardnum ==3) {
+					url = "board1.do?boardnum=3";
+				}else if(boardnum ==4) {
+					url = "minihome.do?id="+id;
+				}
+			}					//3. 4.
+		}catch(IOException e) {
+			throw new ServletException(e);
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
 }

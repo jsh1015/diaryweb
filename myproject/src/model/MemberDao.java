@@ -109,7 +109,7 @@ public class MemberDao {
 		return 0;
 	}
 	
-	public List<Member> list() {
+	public List<Member> memlist() {
 		SqlSession session = DBConnection.getConnection();
 		try {
 			return session.getMapper(cls).select(null);
@@ -155,5 +155,41 @@ public class MemberDao {
 			DBConnection.close(session);
 		}
 		return 0;
+	}
+
+	public List<Member> memsearch(String searchid) {
+		SqlSession session = DBConnection.getConnection();
+		try {
+			return session.getMapper(cls).memsearch(searchid);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.close(session);
+		}
+		return null;
+	}
+
+	public boolean decodelete(String id) {
+		SqlSession session = DBConnection.getConnection();
+		try {
+			return session.getMapper(cls).decodelete(id);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.close(session);
+		}
+		return false;
+	}
+
+	public boolean likedelete(String id) {
+		SqlSession session = DBConnection.getConnection();
+		try {
+			return session.getMapper(cls).likedelete(id);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.close(session);
+		}
+		return false;
 	}
 }

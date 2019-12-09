@@ -57,7 +57,7 @@ public class ControllerServlet extends HttpServlet {
     /*request, response 
      * command로부터 action을 가져옴*/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8"); 
+		request.setCharacterEncoding("UTF-8"); 
 		Action action = null;
 		ActionForward forward = null;
 		String command = null;

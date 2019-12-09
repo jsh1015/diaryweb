@@ -121,14 +121,29 @@ public class BoardDao {
 		return null;
 	}
 	
+	public List<Board> minihomelist(int boardnum, int pageNum, int limit, String id){
+		SqlSession session = DBConnection.getConnection();
+		try {
+			map.clear();
+			map.put("boardnum",boardnum);
+			map.put("start",pageNum-1);
+			map.put("limit", limit);
+			map.put("id", id);
+			return session.getMapper(cls).minihomeboard(map);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.close(session);
+		}
+		return null;
+	}
+	
 	public List<Deco> decolist(String id, int pageNum, int limit, int deconum){
 		SqlSession session = DBConnection.getConnection();
 		try {
 			map.clear();
 			map.put("id",id);
 			map.put("deconum",deconum);
-			map.put("start",(pageNum-1)*limit);
-			map.put("limit", limit);
 			return session.getMapper(cls).decoselect(map);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -293,7 +308,7 @@ public class BoardDao {
 		return 0;
 	}
 
-	public List<Member> minihome(String id) {
+	public List<Member> minihomemem(String id) {
 		SqlSession session = DBConnection.getConnection();
 		try {
 			map.clear();
@@ -314,6 +329,70 @@ public class BoardDao {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
+			DBConnection.close(session);
+		}
+		return false;
+	}
+
+	public List<Deco> minidecolist(String id, int deconum) {
+		SqlSession session = DBConnection.getConnection();
+		try {
+			return session.getMapper(cls).deco(id,deconum);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.close(session);
+		}
+		return null;
+	}
+
+	public int miniboardCount(int boardnum,String id) {
+		SqlSession session = DBConnection.getConnection();
+		try {
+			map.clear();
+			map.put("id",id);
+			map.put("boardnum",boardnum);
+			return session.getMapper(cls).miniboardCount(map);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.close(session);
+		}
+		return 0;
+	}
+
+	public boolean minihomeinsert(Board b) {
+		SqlSession session = DBConnection.getConnection();
+		try {
+			int cnt = session.getMapper(cls).minihomeinsert(b);
+			if(cnt>0)return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnection.close(session);
+		}
+		return false;
+	}
+
+	public int nameupdate(String name,String id) {
+		SqlSession session = DBConnection.getConnection();
+		try {
+			return session.getMapper(cls).nameupdate(name,id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(session);
+		}
+		return 0;
+	}
+
+	public boolean minihomeupdate(Board b) {
+		SqlSession session = DBConnection.getConnection();
+		try {
+			return session.getMapper(cls).minihomeupdate(b);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
 			DBConnection.close(session);
 		}
 		return false;

@@ -25,6 +25,10 @@
 <style type="text/css">
 	table{text-align:center;}
 	textarea{width:50% !important;}
+	.custom-file .custom-file-label:after {
+    padding:0px;
+    line-height: 0px;
+}
 </style>
 </head>
 <body>
@@ -42,10 +46,16 @@
 		})
 		</script>
 		</td></tr>
-		<tr><td>첨부파일</td>
-			<td><input type="file" name="file1"></td></tr>
+		<tr>
+		<td>첨부파일</td>
+<!-- 		<td class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+        </td>
+ -->		<td><input type="file" name="file1"></td>
+		</tr>
 		<tr><td colspan="2">
-			<input type="button" value="게시물 등록" onclick="inputcheck()"></td>
+			<input type="button" class="btn btn-outline-success btn-rounded" value="게시물 등록" onclick="inputcheck()"></td>
 		</tr>
 	</table>
 	</div>

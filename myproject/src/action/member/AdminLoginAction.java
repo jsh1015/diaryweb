@@ -23,7 +23,7 @@ public abstract class AdminLoginAction implements Action {
 			return new ActionForward(false, "../alert.jsp");
 		}else if(!login.equals("admin")) {
 				request.setAttribute("msg", "관리자만 가능한 거래입니다.");
-				request.setAttribute("url", "main.jsp");
+				request.setAttribute("url", "main.me");
 				return new ActionForward(false, "../alert.jsp");
 		}
 		return adminExecute(request,response); //실행하는부분

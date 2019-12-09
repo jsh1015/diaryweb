@@ -14,7 +14,7 @@
 	}
 	
 	function minihome(id){
-		var op = "width=1000, height=500, left=50, top=150, scrollbars=no, resizable=no "
+		var op = "width=1000, height=600, left=50, top=150, scrollbars=no, resizable=no "
 		open(id,"",op);
 	}
 </script>
@@ -25,12 +25,12 @@
 </style>
 </head>
 <body>
+	<p class="grid-header">스티커 공유 게시판</p>
 	<form action="stickerboard.do?boardnum=1" method="post" name="sf">
 		<input type="hidden" name="pageNum" value="1">
 		<input type="hidden" name="boardnum" value="1">
 		<table class="table info-table table-bordered">
-		<tr><td><p class="grid-header">스티커 공유 게시판</p></td></tr>
-		<tr>
+		<tr align="center">
 			<td style="text-align:center; border-width:0px;">
 			<select name="column">
 				<option value="">선택하세요</option>
@@ -61,6 +61,12 @@
 						<tr height="5">
 							<td border="1" colspan="5" style="text-align: left; padding: 10px; ">글개수 : ${boardcnt }</td>
 						</tr>
+					<tr>
+						<td colspan="5" style="text-align: right">
+							<a href="imgwriteForm.do?boardnum=1">
+								<input class="btn btn-outline-info btn-rounded" type="button" value="글쓰기"></a>
+						</td>
+					</tr>
 						<ul>
 						<% int cnt=0; %>
 						<c:forEach items="${list}" var="b">
@@ -124,11 +130,6 @@
 							</tr>
 					</c:if>
 					<!-- else 구문 끝 -->
-					<tr>
-						<td colspan="5" style="text-align: right">
-							<a href="imgwriteForm.do?boardnum=1">[글쓰기]</a>
-						</td>
-					</tr>
 				</table>
 			</div>
 			</div>

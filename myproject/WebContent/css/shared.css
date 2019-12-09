@@ -8427,7 +8427,7 @@ textarea {
     padding: 0px 10px;
     line-height: 1;
     font-size: 0.75rem; }
-    .btn.btn-xs.has-icon span,
+    .btn.btn-xs.has-icon,
     .btn.btn-xs.has-icon i {
       font-size: 0.8125rem;
       margin-right: 5px; }
@@ -8444,7 +8444,7 @@ textarea {
     margin-right: 10px; }
   .btn.social-btn-outlined i {
     margin-right: 10px; }
-  .btn.has-icon span,
+  .btn.has-icon ,
   .btn.has-icon i {
     font-size: 1.25rem;
     margin-right: 10px;
@@ -9096,12 +9096,12 @@ table {
       .table tbody tr td .input-frame:after,
       table tbody tr td .input-frame:after {
         top: 5px; }
-      .table tbody tr td span,
-      table tbody tr td span {
-        display: flex;
+      .table tbody tr td,
+      table tbody tr td span{
+        display: inline;
         align-items: center; }
-        .table tbody tr td span .status-indicator,
-        table tbody tr td span .status-indicator {
+        .table tbody tr td .status-indicator,
+        table tbody tr td  .status-indicator {
           margin-right: 5px; }
       .table tbody tr td .image,
       table tbody tr td .image {
@@ -9712,7 +9712,7 @@ table {
       margin-right: 15px;
       font-size: 1.5625rem;
       color: #696ffb; }
-    .icon-showcase .icon-showcase-cell span {
+    .icon-showcase .icon-showcase-cell {
       margin-left: 5px; }
 
 .sample-chart {

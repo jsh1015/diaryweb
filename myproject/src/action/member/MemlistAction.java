@@ -6,12 +6,12 @@ import javax.servlet.http.HttpServletResponse;
 import action.ActionForward;
 import model.MemberDao;
 
-public class ListAction extends AdminLoginAction{
+public class MemlistAction extends AdminLoginAction{
 
 	@Override
 	protected ActionForward adminExecute(HttpServletRequest request, HttpServletResponse response) {
 		MemberDao dao = new MemberDao();
-		request.setAttribute("list", dao.list());
+		request.setAttribute("memlist", dao.memlist());
 		return new ActionForward();
 	}
 }

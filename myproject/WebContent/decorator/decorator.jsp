@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><decorator:title/></title>
     <!-- plugins:css -->
@@ -13,6 +13,16 @@
      <link rel="stylesheet" href="../../css/demo1.css">
 	<link rel="stylesheet" href="../../css/shared.css">
     <link rel="shortcut icon" href="../../images/favicon.ico" />
+    <script type="text/javascript" src="http://cdn.ckeditor.com/4.5.7/full/ckeditor.js"></script>
+  <style type="text/css">
+  	/* @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+	html, body, h1, h2, h3, h4, h5, h6, p, a {
+		font-family: 'Jeju Gothic', serif;
+	} */
+	.t-header .t-header-content-wrapper .t-header-search-box {
+    width: 25%;
+  </style>
   </head>
   <decorator:head />
   <body class="header-fixed">
@@ -28,9 +38,10 @@
             <i class="mdi mdi-menu"></i>
           </button>
           <!-- 검색했을때 이동하는 action -->
-          <form action="#" class="t-header-search-box">
+          <form action="../member/memsearch.me?id=${login}" name="f" class="t-header-search-box" method="post">
+          <%-- <%=URLEncoder.encode("'몽'", "UTF-8")%>  --%>
             <div class="input-group">
-              <input type="text" class="form-control" size="10" id="inlineFormInputGroup" placeholder="닉네임을 입력하세요" autocomplete="off">
+            <input type="text" class="form-control" name="searchid"  size="20" id="inlineFormInputGroup" placeholder="사람찾기 : 아이디를 입력하세요" >
               <button class="btn btn-primary" type="submit"><i class="mdi mdi-arrow-right-thick"></i></button>
             </div>
           </form>
@@ -71,12 +82,12 @@
           <div class="info-wrapper">
             <p class="user-name"><a href="javascript:loginminihome()">${nickname}</a></p><br>
             <c:if test="${login eq 'admin'}">
-				<a href="#">회원정보보기</a>
+				<a href="../member/memlist.me">회원정보보기</a>
          	</c:if>
             <script type="text/javascript">
             function loginminihome(){
-    			var op = "width=1000, height=500, left=50, top=150, scrollbars=no, resizable=no,toolbars=no, menubar=no"
-    			var url ="../board/minihome.do?id=${login}"
+    			var op = "width=1000, height=600, left=50, top=150, scrollbars=no, resizable=no,toolbars=no, menubar=no"
+    			var url ="../board/minihome.do?id=${login}&boardnum=4"
     			open(url,"",op);
     		}
             </script>

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.ActionForward;
+import model.BoardDao;
 import model.Member;
 import model.MemberDao;
 /*
@@ -21,25 +22,31 @@ public class UpdateAction extends UserLoginAction{
 	@Override
 	protected ActionForward doExecute(HttpServletRequest request, HttpServletResponse response) {
 		Member mem = new Member();
+		String login = (String) request.getSession().getAttribute("login");
 		mem.setId(request.getParameter("id"));
 		mem.setName(request.getParameter("name"));
 		mem.setPicture(request.getParameter("picture"));
 		mem.setEmail(request.getParameter("email"));
 		mem.setDiaryname(request.getParameter("diaryname"));
-		Member m = new MemberDao().selectOne(request.getParameter("id"));
+		Member m = new MemberDao().selectOne(login);
 		String msg = null;
 		String url = null;
-		if(!m.getPass().equals(request.getParameter("pass"))) {
+		if(!login.equals("admin") && !m.getPass().equals(request.getParameter("pass"))) {
 			msg = "비밀번호가 틀렸습니다.";
 			url = "mypage.me?id=" + request.getParameter("id");
 		}else {
 			int result = new MemberDao().update(mem);
-			if(result >0 ) {
+			int board = new BoardDao().nameupdate(request.getParameter("name"),request.getParameter("id"));
+			if(result >0 && board>0 ) {
 				msg = "수정완료";
-				url = "mypage.me?id=" + request.getParameter("id");
-				request.getSession().setAttribute("login",id); 
-				request.getSession().setAttribute("nickname",mem.getName()); 
-				request.getSession().setAttribute("picture",mem.getPicture()); 
+				if(login.equals("admin")) {
+					url = "memlist.me";
+				}else {
+					url = "mypage.me?id=" + request.getParameter("id");
+				}
+				request.getSession().setAttribute("login",login); 
+				request.getSession().setAttribute("nickname",m.getName()); 
+				request.getSession().setAttribute("picture",m.getPicture()); 
 			}else{
 				msg = "수정중 오류발생";
 				url = "main.me";

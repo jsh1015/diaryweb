@@ -17,17 +17,19 @@ public class DeleteAction extends UserLoginAction{
 		String url = null;
 		if(id.equals("admin")) { //1.
 			msg = "°ü¸®ÀÚ´Â Å»ÅðÇÒ ¼ö ¾ø½À´Ï´Ù.";
-			url = "list.me";
+			url = "main.me";
 			return new ActionForward(false, "../alert.jsp");
 		}
 		
 		Member m = new MemberDao().selectOne(id);
 		int result = new MemberDao().delete(id);
+		new MemberDao().decodelete(id);
+		new MemberDao().likedelete(id);
 		if(login.equals("admin") || m.getPass().equals(pass)) {
 			if(result>0) {
 				if(login.equals("admin")) {
 					msg = id +"´Ô °­Á¦Å»Åð ¼º°ø";
-					url = "list.me";
+					url = "main.me";
 				}else {
 					request.getSession().invalidate();
 					msg = id + "´ÔÀÇ Å»Åð°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.";
@@ -36,9 +38,9 @@ public class DeleteAction extends UserLoginAction{
 			}else {
 				msg = "Å»Åð ½ÇÆÐ";
 				if(login.equals("admin")) {
-					url="list.me";
+					url="main.me";
 				}else {
-					url="info.me?id="+id;
+					url="mypage.me?id="+id;
 				}
 			}
 		}else {

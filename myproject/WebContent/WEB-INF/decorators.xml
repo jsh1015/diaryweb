@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="euc-kr" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <decorators defaultdir="/decorator">
-	<!-- decoratorÆú´õÀÇ decorator.jsp·Î °¡¸é -->
+	<!-- decoratorí´ë”ì˜ decorator.jspë¡œ ê°€ë©´ -->
 	<decorator name="main" page="decorator.jsp">
 		<pattern>/diary/member/*</pattern>
 		<pattern>/diary/board/*</pattern>
 	</decorator>
 <!--
-	µû·Î ¼³Á¤ÇØÁàµµµÊ
+	ë”°ë¡œ ì„¤ì •í•´ì¤˜ë„ë¨
 	<decorator name="member" page="decorator.jsp">
 		<pattern>/model2/member/*</pattern>
 	</decorator>
@@ -14,10 +14,7 @@
 		<pattern>/model2/board/*</pattern>
 	</decorator>
  -->
-	<excludes><!-- sitemesh¸¦ »ç¿ëÇÏÁö ¾Ê°Ô -->
-		<pattern>/diary/board/writeForm*</pattern>
-		<pattern>/diary/board/updateForm*</pattern>
-		<pattern>/diary/board/imgupdateForm*</pattern>
+	<excludes><!-- sitemeshë¥¼ ì‚¬ìš©í•˜ì§€ ì•Šê²Œ -->
 		<pattern>/diary/board/picture*</pattern>
 		<pattern>/diary/member/joinForm*</pattern>
 		<pattern>/diary/member/loginForm*</pattern>

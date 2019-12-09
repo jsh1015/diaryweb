@@ -17,7 +17,15 @@ public class Board {
 	private int setpublic;
 	private String img;
 	private int likechk;
+	private String backimg;
 	
+	
+	public String getBackimg() {
+		return backimg;
+	}
+	public void setBackimg(String backimg) {
+		this.backimg = backimg;
+	}
 	public int getNum() {
 		return num;
 	}
@@ -107,7 +115,6 @@ public class Board {
 		return "Board [num=" + num + ", boardnum=" + boardnum + ", id=" + id + ", name=" + name + ", subject=" + subject
 				+ ", content=" + content + ", file1=" + file1 + ", regdate=" + regdate + ", setdate=" + setdate
 				+ ", cnt=" + cnt + ", likenum=" + likenum + ", setpublic=" + setpublic + ", img=" + img + ", likechk="
-				+ likechk + "]";
+				+ likechk + ", backimg=" + backimg + "]";
 	}
-
 }
